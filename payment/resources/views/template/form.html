@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <script type="text/javascript">var submitted = false</script>
+    <iframe name="hiddenConfirm" id="hiddenConfirm" style="display:none;" onload="if(submitted){
+window.location='index.html';}"></iframe>
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdSh6RsQJqBnhyfzJMmy6wsWaSd-amvYz70RLqhUP6SedHvSQ/formResponse" method="post" target="hiddenConfirm" onsubmit="submitted=true">
+        <input type="text" name="entry.658780905">
+        <button type="submit">Submit</button>
+    </form> -->
+    
+    <form id="myForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdSh6RsQJqBnhyfzJMmy6wsWaSd-amvYz70RLqhUP6SedHvSQ/formResponse">
+        <input type="text" name="entry.658780905">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = event.target;
+            const data = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: data,
+                mode: 'no-cors' // Necessary for Google Forms
+            })
+            .then(response => {
+                if (response.ok) { // Check if the response status is 200-299
+                    alert('Form submitted successfully!');
+                    form.reset(); // Optional: Reset the form after submission
+                } else if (response.status === 400) {
+                    alert('Bad Request: Please check your input and try again.');
+                } else {
+                    alert('There was an error submitting the form.');
+                    console.error('Error:', response.statusText);
+                }
+            })
+            .catch(error => {
+                alert('There was an error submitting the form.');
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+
+</html>

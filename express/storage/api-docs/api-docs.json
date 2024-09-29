@@ -1,0 +1,396 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bayarin API",
+        "description": "Hanya Untuk Patner",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/parcels": {
+            "get": {
+                "tags": [
+                    "Parcels"
+                ],
+                "summary": "Get List of Parcels",
+                "description": "Retrieve a list of all parcels.",
+                "operationId": "getParcels",
+                "responses": {
+                    "200": {
+                        "description": "List of parcels retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statuscode": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Parcels retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Parcel"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Parcels"
+                ],
+                "summary": "Create a Parcel",
+                "description": "Store a new parcel.",
+                "operationId": "createParcel",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name_product",
+                                    "name_recipient",
+                                    "address_shipper",
+                                    "name_shipper",
+                                    "address_recipient",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "name_product": {
+                                        "type": "string",
+                                        "example": "Laptop"
+                                    },
+                                    "name_recipient": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "address_shipper": {
+                                        "type": "string",
+                                        "example": "123 Ship Lane"
+                                    },
+                                    "name_shipper": {
+                                        "type": "string",
+                                        "example": "Jane Smith"
+                                    },
+                                    "address_recipient": {
+                                        "type": "string",
+                                        "example": "456 Recieve Rd"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "delivered",
+                                            "cancelled"
+                                        ],
+                                        "example": "pending"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Parcel created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statuscode": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Parcel created successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Parcel"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input provided"
+                    }
+                }
+            }
+        },
+        "/api/parcels/{id}": {
+            "get": {
+                "tags": [
+                    "Parcels"
+                ],
+                "summary": "Get a Specific Parcel",
+                "description": "Retrieve details of a specific parcel.",
+                "operationId": "getParcel",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the parcel to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Parcel retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statuscode": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Parcel retrieved successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Parcel"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Parcel not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Parcels"
+                ],
+                "summary": "Update a Parcel",
+                "description": "Update details of an existing parcel.",
+                "operationId": "updateParcel",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the parcel to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name_product": {
+                                        "type": "string",
+                                        "example": "Updated Laptop"
+                                    },
+                                    "name_recipient": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "address_shipper": {
+                                        "type": "string",
+                                        "example": "123 Ship Lane"
+                                    },
+                                    "name_shipper": {
+                                        "type": "string",
+                                        "example": "Jane Smith"
+                                    },
+                                    "address_recipient": {
+                                        "type": "string",
+                                        "example": "456 Recieve Rd"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "delivered",
+                                            "cancelled"
+                                        ],
+                                        "example": "delivered"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Parcel updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statuscode": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Parcel updated successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Parcel"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Parcel not found"
+                    },
+                    "400": {
+                        "description": "Invalid input provided"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Parcels"
+                ],
+                "summary": "Delete a Parcel",
+                "description": "Remove a specific parcel from storage.",
+                "operationId": "deleteParcel",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the parcel to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Parcel deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statuscode": {
+                                            "type": "integer",
+                                            "example": 204
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Parcel deleted successfully"
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Parcel not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Parcel": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "uuid"
+                    },
+                    "name_product": {
+                        "type": "string",
+                        "example": "Laptop"
+                    },
+                    "name_recipient": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "address_shipper": {
+                        "type": "string",
+                        "example": "123 Ship Lane"
+                    },
+                    "name_shipper": {
+                        "type": "string",
+                        "example": "Jane Smith"
+                    },
+                    "address_recipient": {
+                        "type": "string",
+                        "example": "456 Recieve Rd"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "delivered",
+                            "cancelled"
+                        ],
+                        "example": "pending"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Parcels",
+            "description": "Parcels"
+        }
+    ]
+}
